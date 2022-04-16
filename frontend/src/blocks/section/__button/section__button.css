@@ -1,0 +1,14 @@
+.section__button {
+    margin: 0;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    font-family: 'Inter', 'Arial', sans-serif;
+    margin-top: 216px;
+    margin-bottom: 15px;
+    width: 358px;
+    height: 50px;
+    border-radius: 2px;
+}

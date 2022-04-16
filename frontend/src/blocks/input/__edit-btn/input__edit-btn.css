@@ -1,0 +1,27 @@
+.input__edit-btn {
+    width: 24px;
+    height: 24px;
+    border: 1px solid #FFFFFF;
+    background-color: black;
+    background-image: url(../../../images/btn-1.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+    cursor: pointer;
+    align-self: center;
+    outline: none;
+}
+
+.input__edit-btn:hover {
+        opacity: 0.6;
+}
+
+
+@media screen and (max-width: 625px) {
+    .input__edit-btn {
+        width: 18px;
+        height: 18px;
+        background-size: 7.5px 7.5px;
+    }
+}

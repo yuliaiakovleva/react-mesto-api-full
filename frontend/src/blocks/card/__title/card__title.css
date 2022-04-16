@@ -1,0 +1,17 @@
+.card__title {
+    align-items: baseline;
+    margin: 0;
+    max-width: 190px;
+
+    /* Шрифт */
+    color: #000000;
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 29px; 
+    
+    /* штуки про троеточие */
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}

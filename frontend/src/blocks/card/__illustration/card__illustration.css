@@ -1,0 +1,6 @@
+.card__illustration {
+    /* border: 2px green solid; */
+    height: 282px;
+    width: 100%;
+    object-fit: cover;
+}

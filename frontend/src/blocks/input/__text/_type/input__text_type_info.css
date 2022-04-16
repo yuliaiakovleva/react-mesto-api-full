@@ -1,0 +1,18 @@
+.input__text_type_info {
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: 400;
+}
+
+@media screen and (max-width: 900px) {
+    .input__text_type_info {
+        font-size: 14px;
+        line-height: 17px;
+    }
+}
+
+@media screen and (max-width: 625px) {
+    .input__text_type_info {
+           text-align: center;
+    }
+}

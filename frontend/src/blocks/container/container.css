@@ -1,0 +1,17 @@
+.container{
+        max-width: 880px;
+        margin: 0 auto;
+    }
+    
+    @media screen and (min-width: 426px) and (max-width: 900px) {
+        .section {
+            width: 80%;
+        }
+    }
+    
+    @media screen and (min-width: 426px) and (max-width: 727px) {
+        .section {
+            display: flex;
+            justify-content: center;
+        }
+    }

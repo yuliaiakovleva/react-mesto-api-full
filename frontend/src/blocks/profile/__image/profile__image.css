@@ -1,0 +1,22 @@
+.profile__image {
+    /* border: 2px red solid; */
+    background-image: url(../../../images/russo.jpg);
+    width: 120px;
+    min-height: 120px;
+    background-size: cover;
+    border-radius: 60px;
+    opacity: 1;
+}
+
+
+.profile__image:hover {
+    opacity: 0.2;
+}
+
+
+/* @media screen and (max-width: 625px) {
+    .profile__image {
+        margin: auto;
+    }
+}
+ */

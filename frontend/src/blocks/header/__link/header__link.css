@@ -1,0 +1,12 @@
+.header__link {
+    color: #ffffff;
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: right;
+    position: relative;
+    text-decoration: none;
+    margin-left: 24px;
+}
+
