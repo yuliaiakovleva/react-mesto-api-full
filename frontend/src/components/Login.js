@@ -31,10 +31,6 @@ function Login(props) {
         // console.log(values.email)
     }
 
-
-
-
-
     return (
         <SectionForm
             title="Вход"

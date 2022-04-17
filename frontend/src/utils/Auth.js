@@ -1,6 +1,6 @@
 
 
-export const BASE_URL = 'http://localhost:3000';
+export const BASE_URL = 'http://api.mesto.yuliayakovleva.nomoredomains.work';
 
 function checkResponse(res){
   if (res.ok) {

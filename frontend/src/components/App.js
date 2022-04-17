@@ -169,6 +169,7 @@ function App() {
                 // console.log(data);
                 setCurrentUser(data);
                 closeAllPopups();
+                debugger;
             })
             .catch((err) => {
                 console.log('Ошибка.', err)
@@ -256,88 +257,90 @@ function App() {
         setIfLogin(answer);
    }
 
-    return (
-        <>
-            {/* распространяем контекст по всему dom-дереву */}
-            <CurrentUserContext.Provider value={currentUser}>
-                <Header location={location.pathname} loggedIn={loggedIn} email={info} onLogout={handleLogout}></Header>
-                <main className="content">
-                    <Switch>
-                        <ProtectedRoute
-                            path="/" exact
-                            loggedIn={loggedIn}
-                            component={Main}
-                            handleCardClick={handleCardClick}
-                            onEditAvatar={handleEditAvatarClick}
-                            onEditProfile={handleEditProfileClick}
-                            onAddPlace={handleAddPlaceClick}
-                            cards={cards}
-                            onCardLike={handleCardLike}
-                            onCardDelete={handleCardDlete}
-                        >
-                        </ProtectedRoute>
+   return (
+    <>
+        {/* распространяем контекст по всему dom-дереву */}
+        <CurrentUserContext.Provider value={currentUser}>
+            <Header location={location.pathname} loggedIn={loggedIn} email={info} onLogout={handleLogout}></Header>
+            <main className="content">
+                <Switch>
+                    <ProtectedRoute
+                        path="/" exact
+                        loggedIn={loggedIn}
+                        component={Main}
+                        handleCardClick={handleCardClick}
+                        onEditAvatar={handleEditAvatarClick}
+                        onEditProfile={handleEditProfileClick}
+                        onAddPlace={handleAddPlaceClick}
+                        cards={cards}
+                        onCardLike={handleCardLike}
+                        onCardDelete={handleCardDlete}
+                    >
+                    </ProtectedRoute>
 
-                        <Route path="/sign-in">
-                            <Login handleLogin={handleLogin}></Login>
+                    <Route path="/sign-in">
+                        <Login handleLogin={handleLogin}></Login>
 
-                        </Route>
+                    </Route>
 
-                        <Route path="/sign-up">
+                    <Route path="/sign-up">
 
-                            <Register handleRegister={handleRegister} onInfoToolTip={handleInfoToolTipClick}></Register>
-                        </Route>
+                        <Register handleRegister={handleRegister} onInfoToolTip={handleInfoToolTipClick}></Register>
+                    </Route>
 
-                        {/* что бы пользователь ни ввел, то его направят по адресу "/" */}
-                        <Route path="*">
-                            <Redirect to="/"></Redirect>
-                        </Route>
-                    </Switch>
-                    <Footer location={location.pathname} />
-                </main>
+                   
+                    <Route>{loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-in" />}</Route>
+                </Switch>
+                <Footer location={location.pathname} />
+            </main>
 
 
-                {/* <!-- попап с редактированием профиля --> */}
-                <EditProfilePopup
-                    isOpen={isEditProfilePopupOpen}
-                    onClose={closeAllPopups}
-                    onUpdateUser={handleUpdateUser}
-                >
-                </EditProfilePopup>
-
-                {/* <!-- попап с обновлением аватара --> */}
-                <EditAvatarPopup
-                    isOpen={isEditAvatarPopupOpen}
-                    onClose={closeAllPopups}
-                    onUpdateAvatar={handleUpdateAvatar}
-                >
-                </EditAvatarPopup>
-
-                {/* <!-- попап с добавлением карточек --> */}
-                <AddPlacePopup
-                    isOpen={isAddPlacePopupOpen}
-                    onClose={closeAllPopups}
-                    onAddPlace={handleAddPlaceSubmit}
-                >
-                </AddPlacePopup>
-
-                <InfoToolTip
-                isOpen={isInfoToolTipOpen}
+            {/* <!-- попап с редактированием профиля --> */}
+            <EditProfilePopup
+                isOpen={isEditProfilePopupOpen}
                 onClose={closeAllPopups}
-                ifLogin={ifLogin}
-                > 
+                onUpdateUser={handleUpdateUser}
+                // onOverlayClose={handleOverlayClose}
+            >
+            </EditProfilePopup>
 
-                </InfoToolTip>
-
-            </CurrentUserContext.Provider>
-
-            {/* попап с картинкой на всю страницу */}
-            <ImagePopup
-                card={selectedCard}
+            {/* <!-- попап с обновлением аватара --> */}
+            <EditAvatarPopup
+                isOpen={isEditAvatarPopupOpen}
                 onClose={closeAllPopups}
+                onUpdateAvatar={handleUpdateAvatar}
+                // onOverlayClose={handleOverlayClose}
+            >
+            </EditAvatarPopup>
 
-            /> 
-        </>
-    );
+            {/* <!-- попап с добавлением карточек --> */}
+            <AddPlacePopup
+                isOpen={isAddPlacePopupOpen}
+                onClose={closeAllPopups}
+                onAddPlace={handleAddPlaceSubmit}
+                // onOverlayClose={handleOverlayClose}
+            >
+            </AddPlacePopup>
+
+            <InfoToolTip
+            isOpen={isInfoToolTipOpen}
+            onClose={closeAllPopups}
+            ifLogin={ifLogin}
+            > 
+
+            </InfoToolTip>
+
+        </CurrentUserContext.Provider>
+
+        {/* попап с картинкой на всю страницу */}
+        <ImagePopup
+            card={selectedCard}
+            onClose={closeAllPopups}
+            // onOverlayClose={handleOverlayClose}
+
+        /> 
+    </>
+);
 }
 
 export default App;

@@ -21,7 +21,7 @@ module.exports.login = (req, res, next) => {
         NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
         { expiresIn: '7d' },
       );
-      // console.log('Я тут');
+      console.log('Я тут');
       console.log(token, 'Я тут');
       res.send({ token });
     })
