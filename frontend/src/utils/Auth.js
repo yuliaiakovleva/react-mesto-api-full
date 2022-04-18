@@ -19,9 +19,6 @@ export const register = (password, email) => {
       },
       body: JSON.stringify({password, email})
     })
-    // .then((response) => {
-    //   return response.json();
-    // })
     .then((response) => {
       return checkResponse(response);
     })
@@ -29,9 +26,6 @@ export const register = (password, email) => {
       return res;
     })
   };
-
-
-
 
 export const authorize = (password, email) => {
     return fetch(`${BASE_URL}/signin`, {
@@ -45,14 +39,6 @@ export const authorize = (password, email) => {
     .then((response) => {
       return checkResponse(response);
     })
-    // .then((data) => {
-    //   if (data.user){
-    //       // data.user или data.jwt ??
-    //     localStorage.setItem('jwt', data.jwt);
-    //     // возвращаем объект с данными пользователя 
-    //     return data;
-    //   } 
-    // })
   };
 
 // метод проверяет, имеет ли пользователь права на данные 
