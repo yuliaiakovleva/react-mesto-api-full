@@ -23,8 +23,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(requestLogger);
 app.use(cors());
-// app.use(enableCors);
-// app.use(enablePreCors);
 
 console.log(process.env.NODE_ENV);
 
