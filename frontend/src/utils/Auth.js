@@ -1,6 +1,4 @@
-
-
-export const BASE_URL = 'http://api.mesto.yuliayakovleva.nomoredomains.work';
+export const BASE_URL = 'https://api.mesto.yuliayakovleva.nomoredomains.work';
 
 function checkResponse(res){
   if (res.ok) {

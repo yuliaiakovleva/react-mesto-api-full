@@ -27,6 +27,4 @@ cardRoutes.put('/cards/likes/:cardId', validateCardId, likeCard);
 
 cardRoutes.delete('/cards/likes/:cardId', validateCardId, dislikeCard);
 
-// cardRoutes.get('/cards/:cardId', getMyCard);
-
 module.exports = cardRoutes;

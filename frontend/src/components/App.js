@@ -20,11 +20,37 @@ import react from 'react';
 
 function App() {
 
-     // Авторизация и Регистрация
-     const [loggedIn, setLoggedIn] = useState(false);
+    const location = useLocation();
+    const history = useHistory();
+    // Авторизация и Регистрация
+    const [loggedIn, setLoggedIn] = useState(false);
+    const [token, setToken] = useState(null);
+    const [info, setEmail] = useState('');
 
-     function handleLogin(data) {
-         
+    // для InfoToolTip
+    const [ifLogin, setIfLogin] = react.useState('');
+
+    const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false)
+    const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false)
+    const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false)
+    const [isInfoToolTipOpen, setInfoToolTipOpen] = React.useState(false)
+    const [selectedCard, setSelectedCard] = React.useState({
+         name: '',
+         link: ''
+     });
+    
+    const [cards, setCards] = useState([]);
+    const [currentUser, setCurrentUser] = React.useState({
+         name: '',
+         about: '',
+         avatar: ''
+     });
+
+
+
+
+    function handleLogin(data) {
+         console.log(data)
          auth.authorize(data.password, data.email)
          .then((res) => {
              // console.log(res);
@@ -35,10 +61,10 @@ function App() {
              // благодаря этому вызову я меняю мейл сразу же
              handleTokenCheck('/')
              console.log(localStorage);
-             api.getUserInfo()
-             .then(data => {
-                 setCurrentUser(data);
-             });
+            //  api.getUserInfo()
+            //  .then(data => {
+            //      setCurrentUser(data);
+            //  });
              // history.push('/')
          })
          .catch(err => {
@@ -67,7 +93,7 @@ function App() {
          });
      }
 
-     const [info, setEmail] = useState('')
+    
  
      useEffect(() => {
          handleTokenCheck(location.pathname);
@@ -85,6 +111,8 @@ function App() {
                         // console.log(email);
                         setEmail(email);
                         setLoggedIn(true);
+                        console.log(jwt);
+                        setToken(jwt);
                         history.push(path);
                      }
                  })
@@ -101,67 +129,35 @@ function App() {
          setCurrentUser({});
          history.push('/sign-in');
     }
-
-    const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false)
-    const [isAddPlacePopupOpen, setAddPlacePopupOpen] = React.useState(false)
-    const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false)
-    const [isInfoToolTipOpen, setInfoToolTipOpen] = React.useState(false)
-    const [selectedCard, setSelectedCard] = React.useState({
-        name: '',
-        link: ''
-    })
-    const [currentUser, setCurrentUser] = React.useState({
-        name: '',
-        about: '',
-        avatar: ''
-    })
-
-    const history = useHistory();
-
+    
+//  загружаем всю инфу на страницу после авторизации
     useEffect(() => {
-        api.getUserInfo()
+        console.log(token)
+        if(token) {
+            api.getUserInfo()
             .then(data => {
                 setCurrentUser(data);
-                // console.log(data);
-                // console.log(localStorage);
-            }
-            )
+                console.log(data);
+            })
             .catch((err) => {
                 console.log('Ошибка.', err)
             })
-    }, [])
-    function handleEditProfileClick() {
-        setIsEditProfilePopupOpen(true);
-    }
+        }
+    }, [token])
 
-    function handleEditAvatarClick() {
-        setEditAvatarPopupOpen(true);
-    }
-
-
-    function handleAddPlaceClick() {
-        setAddPlacePopupOpen(true);
-    }
-
-    function handleInfoToolTipClick() {
-        setInfoToolTipOpen(true);
-    }
-
-    function handleCardClick(card) {
-        setSelectedCard(card);
-    }
-
-
-    function closeAllPopups() {
-        setIsEditProfilePopupOpen(false);
-        setEditAvatarPopupOpen(false);
-        setAddPlacePopupOpen(false);
-        setInfoToolTipOpen(false);
-        setSelectedCard({
-            name: '',
-            link: ''
-        });
-    }
+    useEffect(() => {
+        if(token) {
+            api.getInitialCards()
+            .then(data => {
+                // console.log(data);
+                setCards(data);
+            })
+            .catch((err) => {
+                console.log('Ошибка.', err)
+            })
+        }
+    }, [token])
+    
 
     function handleUpdateUser(data) {
         api.setUserInfo(data)
@@ -191,18 +187,7 @@ function App() {
 
     // про карточки 
 
-    const [cards, setCards] = useState([]);
-
-    useEffect(() => {
-        api.getInitialCards()
-            .then(data => {
-                // console.log(data);
-                setCards(data);
-            })
-            .catch((err) => {
-                console.log('Ошибка.', err)
-            })
-    }, [])
+  
 
     function handleCardLike(card) {
         // console.log(card);
@@ -247,21 +232,36 @@ function App() {
             })
     }
 
-    const location = useLocation();
-
-
-   // для InfoToolTip
-   const [ifLogin, setIfLogin] = react.useState('');
+    
 
    function handleIfLogin(answer) {
         setIfLogin(answer);
+   }
+
+   // Открываем и закрываем
+   function handleEditProfileClick() {setIsEditProfilePopupOpen(true);}
+   function handleEditAvatarClick() {setEditAvatarPopupOpen(true);}
+   function handleAddPlaceClick() {setAddPlacePopupOpen(true);}
+   function handleInfoToolTipClick() {setInfoToolTipOpen(true);}
+   function handleCardClick(card) {setSelectedCard(card);}
+   function closeAllPopups() {
+       setIsEditProfilePopupOpen(false);
+       setEditAvatarPopupOpen(false);
+       setAddPlacePopupOpen(false);
+       setInfoToolTipOpen(false);
+       setSelectedCard({
+           name: '',
+           link: ''
+       });
    }
 
    return (
     <>
         {/* распространяем контекст по всему dom-дереву */}
         <CurrentUserContext.Provider value={currentUser}>
-            <Header location={location.pathname} loggedIn={loggedIn} email={info} onLogout={handleLogout}></Header>
+            <Header 
+            location={location.pathname} loggedIn={loggedIn} email={info} onLogout={handleLogout}
+            ></Header>
             <main className="content">
                 <Switch>
                     <ProtectedRoute
@@ -279,13 +279,19 @@ function App() {
                     </ProtectedRoute>
 
                     <Route path="/sign-in">
-                        <Login handleLogin={handleLogin}></Login>
+                        <Login 
+                        handleLogin={handleLogin}
+                        >
+                            
+                        </Login>
 
                     </Route>
 
                     <Route path="/sign-up">
 
-                        <Register handleRegister={handleRegister} onInfoToolTip={handleInfoToolTipClick}></Register>
+                        <Register 
+                        handleRegister={handleRegister} onInfoToolTip={handleInfoToolTipClick}
+                        ></Register>
                     </Route>
 
                    
@@ -300,7 +306,6 @@ function App() {
                 isOpen={isEditProfilePopupOpen}
                 onClose={closeAllPopups}
                 onUpdateUser={handleUpdateUser}
-                // onOverlayClose={handleOverlayClose}
             >
             </EditProfilePopup>
 
@@ -309,7 +314,6 @@ function App() {
                 isOpen={isEditAvatarPopupOpen}
                 onClose={closeAllPopups}
                 onUpdateAvatar={handleUpdateAvatar}
-                // onOverlayClose={handleOverlayClose}
             >
             </EditAvatarPopup>
 
@@ -318,7 +322,6 @@ function App() {
                 isOpen={isAddPlacePopupOpen}
                 onClose={closeAllPopups}
                 onAddPlace={handleAddPlaceSubmit}
-                // onOverlayClose={handleOverlayClose}
             >
             </AddPlacePopup>
 
@@ -336,7 +339,6 @@ function App() {
         <ImagePopup
             card={selectedCard}
             onClose={closeAllPopups}
-            // onOverlayClose={handleOverlayClose}
 
         /> 
     </>

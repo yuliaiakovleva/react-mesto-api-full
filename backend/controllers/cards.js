@@ -5,7 +5,6 @@ module.exports.getCards = (req, res, next) => {
   Card.find({})
     .populate('likes')
     .then((cards) => {
-      // console.log(cards);
       res.send(cards);
     })
     .catch((err) => {
@@ -75,8 +74,6 @@ module.exports.dislikeCard = (req, res, next) => {
 
 module.exports.deleteCard = (req, res, next) => {
   const { cardId } = req.params;
-  // console.log(req.user._id);
-  // console.log(cardId);
   Card.findById(cardId)
     .populate('likes')
     .orFail(() => {
@@ -84,9 +81,6 @@ module.exports.deleteCard = (req, res, next) => {
     })
     .then((card) => {
       if (card.owner.toString() === req.user._id) {
-        // console.log(card.owner.toString());
-        // console.log(req.user._id);
-        // console.log(card._id.toString());
         return Card.findByIdAndRemove(card._id.toString())
           .then((answer) => res.send(answer));
       } else {

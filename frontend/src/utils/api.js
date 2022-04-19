@@ -2,7 +2,6 @@ class Api {
     constructor({url, headers}) {
         this._url = url;
         this._headers = headers;
-        // this._jwt = jwt;
     };
 
     _checkResponse(res){
@@ -37,7 +36,7 @@ class Api {
             method: 'PATCH',
             headers:  {
                'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-               ...this.headers,
+               ...this._headers,
             },
             body: JSON.stringify({
                 name: inputValue.name,
@@ -49,16 +48,16 @@ class Api {
  
     };
 
-    addNewCard(data) {
+    addNewCard({name, link}) {
         return fetch(`${this._url}/cards`, {
             method: 'POST',
             headers:  {
                'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-               ...this.headers,
+               ...this._headers,
             },
             body: JSON.stringify({
-                name: data.name,
-                link: data.link
+                name,
+                link
             })
           })
         .then(this._checkResponse)
@@ -70,7 +69,7 @@ class Api {
             method: `${isLiked ? 'DELETE' : 'PUT'}`,
             headers:  {
                'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-               ...this.headers
+               ...this._headers
             },
           })
         .then(this._checkResponse) 
@@ -81,7 +80,7 @@ class Api {
             method: 'DELETE',
             headers:  {
                'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-               ...this.headers,
+               ...this._headers,
             },
           })
         .then(this._checkResponse)
@@ -93,7 +92,7 @@ class Api {
             method: 'PATCH',
             headers:  {
                'Authorization': `Bearer ${localStorage.getItem('jwt')}`,
-               ...this.headers
+               ...this._headers
             },
             body: JSON.stringify({avatar: link})
           })
@@ -104,7 +103,7 @@ class Api {
 }
 
 const api = new Api({
-    url: 'http://api.mesto.yuliayakovleva.nomoredomains.work',
+    url: 'https://api.mesto.yuliayakovleva.nomoredomains.work',
     headers: {
     //   authorization: `Bearer ${localStorage.jwt}`,
       'Content-Type': 'application/json'
