@@ -1,3 +1,4 @@
+require('dotenv').config();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
@@ -9,6 +10,8 @@ const {
 } = require('../errors/errors');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
+console.log(NODE_ENV, JWT_SECRET);
+console.log(process.env);
 
 module.exports.login = (req, res, next) => {
   const { email, password } = req.body;

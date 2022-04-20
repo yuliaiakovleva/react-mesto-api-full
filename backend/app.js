@@ -1,10 +1,10 @@
 const express = require('express');
 
 const app = express();
-// require('dotenv').config();
+require('dotenv').config();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-require('dotenv').config();
+// require('dotenv').config();
 const { celebrate, Joi } = require('celebrate');
 const { errors } = require('celebrate');
 const validator = require('validator');
@@ -26,7 +26,7 @@ app.use(cors());
 
 console.log(process.env.NODE_ENV);
 console.log(process.env.JWT_SECRET);
-// console.log(process.env)
+console.log(process.env)
 
 
 app.get('/crash-test', () => {
