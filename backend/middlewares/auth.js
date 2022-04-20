@@ -11,19 +11,19 @@ module.exports = (req, res, next) => {
   }
 
   const token = authorization.replace('Bearer ', '');
-  console.log(token, 'А теперь тут');
+  // console.log(token, 'А теперь тут');
   let payload;
 
   try {
     console.log(JWT_SECRET);
     payload = jwt.verify(token, NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret');
     // payload = jwt.verify(token, 'some-secret-key');
-    console.log(payload);
+    // console.log(payload);
   } catch (err) {
     next(new UnauthorizedError('С токеном что-то не так'));
   }
 
-  console.log(NODE_ENV, JWT_SECRET)
+  console.log(NODE_ENV, JWT_SECRET);
   req.user = payload; // записываем пейлоуд в объект запроса
 
   return next(); // пропускаем запрос дальше
