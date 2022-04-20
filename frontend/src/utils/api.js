@@ -104,7 +104,7 @@ class Api {
 
 const api = new Api({
     url: 'https://api.mesto.yuliayakovleva.nomoredomains.work',
-    headers: {
+    headers: { 
     //   authorization: `Bearer ${localStorage.jwt}`,
       'Content-Type': 'application/json'
     }

@@ -25,12 +25,16 @@ app.use(requestLogger);
 app.use(cors());
 
 console.log(process.env.NODE_ENV);
+console.log(process.env.JWT_SECRET);
+// console.log(process.env)
+
 
 app.get('/crash-test', () => {
   setTimeout(() => {
     throw new Error('Сервер сейчас упадёт');
   }, 0);
 });
+
 
 app.post('/signup', celebrate({
   body: Joi.object().keys({

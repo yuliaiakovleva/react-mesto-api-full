@@ -35,12 +35,14 @@ export const authorize = (password, email) => {
       body: JSON.stringify({password, email})
     })
     .then((response) => {
+      console.log(response);
       return checkResponse(response);
     })
   };
 
 // метод проверяет, имеет ли пользователь права на данные 
   export const checkToken = (token) => {
+    console.log(token);
     return fetch(`${BASE_URL}/users/me`, {
       method: 'GET',
       headers: {

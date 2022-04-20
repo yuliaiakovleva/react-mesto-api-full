@@ -53,8 +53,8 @@ function App() {
          console.log(data)
          auth.authorize(data.password, data.email)
          .then((res) => {
-             // console.log(res);
-             // console.log(localStorage);
+             console.log(res);
+             console.log(localStorage);
              // при авторизации мы записываем в локал сторрадж токен. потом в app в функции handleTokenCheck будем его все время проверять
              localStorage.setItem('jwt', res.token);
              setLoggedIn(true);
@@ -92,8 +92,6 @@ function App() {
            console.log(err);
          });
      }
-
-    
  
      useEffect(() => {
          handleTokenCheck(location.pathname);
@@ -106,9 +104,9 @@ function App() {
              auth.checkToken(jwt)
                  .then((res) => {
                      if (res) {
-                        // console.log(res.data);
+                        console.log(res.data);
                         const email = res.email;
-                        // console.log(email);
+                        console.log(email);
                         setEmail(email);
                         setLoggedIn(true);
                         console.log(jwt);
@@ -165,7 +163,6 @@ function App() {
                 // console.log(data);
                 setCurrentUser(data);
                 closeAllPopups();
-                debugger;
             })
             .catch((err) => {
                 console.log('Ошибка.', err)

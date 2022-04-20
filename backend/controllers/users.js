@@ -22,7 +22,7 @@ module.exports.login = (req, res, next) => {
         { expiresIn: '7d' },
       );
       console.log('Я тут');
-      console.log(token, 'Я тут');
+      // console.log(token, 'Я тут');
       res.send({ token });
     })
     .catch(() => {
